@@ -1,9 +1,27 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
-@Body
+
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code{
+    private bool IsLoginPage => NavigationManager.Uri.Contains("login");
+}
+
+@if (IsLoginPage)
+{
+    <body class="hold-transition login-page" dir="rtl">
+        @Body
+    </body>
+}
+else
+{
+    <body>
+        @Body
+    </body>
+}

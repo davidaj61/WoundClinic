@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 
 <head>
     <meta charset="utf-8" />
@@ -7,13 +7,34 @@
     <base href="/" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["WoundClinic.styles.css"]" />
+    <link rel="stylesheet" href="base/css/fontawesome-free/css/all.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="base/css/adminlte.min.css" />
+    <!-- rtl CSS -->
+    <link rel="stylesheet" href="base/css/rtl.css" />
+    <style>
+        html,body{
+            height: 100%;
+            background-image: url("base/img/jums-bg.png");
+            background-repeat:no-repeat;
+            background-size:cover;
+            background-position:centercenter;
+            background-attachment:fixed;
+        }
+
+    </style>
     <ImportMap />
     <HeadOutlet @rendermode="PageRenderMode" />
 </head>
 
-<body>
+<body >
     <Routes @rendermode="PageRenderMode" />
     <script src="_framework/blazor.web.js"></script>
+    <script src="base/js/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="base/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="base/js/adminlte.js"></script>
 </body>
 
 </html>
