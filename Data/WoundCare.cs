@@ -11,16 +11,16 @@ namespace WoundClinic.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(Patient))]
-        public BigInteger  PatientId { get; set; }
+        public long  PatientId { get; set; }
 
-        [ForeignKey(nameof(ApplicationUser))]
         public string UserId { get; set; }
 
         public DateTime Date { get; set; }
 
+        [ForeignKey(nameof(PatientId))]
         public Patient Patient { get; set; }
 
+        [ForeignKey(nameof(UserId))]
         public ApplicationUser ApplicationUser { get; set; }
 
         public ICollection<DressingCare> DressingCares { get; set; }

@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Numerics;
-using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace WoundClinic.Data
 {
     [PrimaryKey(nameof(Id), nameof(NationalCode))]  
-    public class Patient
+    public class Person
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,16 +16,19 @@ namespace WoundClinic.Data
         public long NationalCode { get; set; }
 
         [Required]
-        public long MobileNumber { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string? Address { get; set; }
+        [Required]
+        public string LastName { get; set; } = string.Empty;
 
-        public long UserId { get; set; }
+        [Required]
+        public bool Gender { get; set; }
 
+        [ForeignKey(nameof(NationalCode))]
+        public Patient? Patient { get; set; }
+
+        [ForeignKey(nameof(NationalCode))]
         public ApplicationUser ApplicationUser { get; set; }
 
-        public Person Person { get; set; }
-
-        public ICollection<WoundCare> WoundCares { get; set; }
     }
 }

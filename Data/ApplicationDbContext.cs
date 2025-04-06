@@ -14,6 +14,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
+        modelBuilder.Entity<Patient>()
+            .Property(p => p.NationalCode)
+            .HasConversion(new ValueConverter<Guid, string>(
+                v => v.ToString(),
+                v => Guid.Parse(v)));
+
     }
 }

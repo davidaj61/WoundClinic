@@ -9,10 +9,8 @@ namespace WoundClinic.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(WoundCare))]
         public int WoundCareId { get; set; }
 
-        [ForeignKey(nameof(Dressing))]
         public byte DressingId { get; set; }
 
         public byte Quantity { get; set; }
@@ -21,8 +19,10 @@ namespace WoundClinic.Data
 
         public int Payment => Quantity * Price;
 
+        [ForeignKey(nameof(WoundCareId))]
         public WoundCare WoundCare { get; set; }
 
+        [ForeignKey(nameof(DressingId))]
         public Dressing Dressing { get; set; }
 
         
