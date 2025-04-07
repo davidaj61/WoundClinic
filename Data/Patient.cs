@@ -6,13 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WoundClinic.Data
 {
-    [PrimaryKey(nameof(Id), nameof(NationalCode))]  
+    [PrimaryKey(nameof(NationalCode))]  
     public class Patient
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long NationalCode { get; set; }
@@ -24,6 +20,7 @@ namespace WoundClinic.Data
 
         public long UserId { get; set; }
 
+        [ForeignKey(nameof(UserId))]
         public ApplicationUser ApplicationUser { get; set; }
 
         public Person Person { get; set; }

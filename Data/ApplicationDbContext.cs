@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -10,16 +11,22 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     
     public DbSet<Patient> Patients { get; set; }
+    public DbSet<Person> Persons { get; set; }
+    public DbSet<WoundCare> WoundCares { get; set; }
+    public DbSet<Dressing> Dressings { get; set; }
+    public DbSet<DressingCare> DressingCares { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Patient>()
-            .Property(p => p.NationalCode)
-            .HasConversion(new ValueConverter<Guid, string>(
-                v => v.ToString(),
-                v => Guid.Parse(v)));
+            .HasOne(q => q.ApplicationUser)
+            .WithMany(q => q.Patients)
+            .HasPrincipalKey(q => q.NationalCode)
+            .HasForeignKey(q => q.UserId)
+            .IsRequired();
+            
 
     }
 }

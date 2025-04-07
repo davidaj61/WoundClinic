@@ -4,13 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WoundClinic.Data
 {
-    [PrimaryKey(nameof(Id), nameof(NationalCode))]  
+    [PrimaryKey(nameof(NationalCode))]  
     public class Person
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long NationalCode { get; set; }
