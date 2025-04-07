@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WoundClinic.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateIdentitySchema : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,7 @@ namespace WoundClinic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PersonNationalCode = table.Column<long>(type: "bigint", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -48,6 +49,22 @@ namespace WoundClinic.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.UniqueConstraint("AK_AspNetUsers_PersonNationalCode", x => x.PersonNationalCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Dressings",
+                columns: table => new
+                {
+                    Id = table.Column<byte>(type: "tinyint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DressingName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    HasConstPrice = table.Column<bool>(type: "bit", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dressings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +173,102 @@ namespace WoundClinic.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    NationalCode = table.Column<long>(type: "bigint", nullable: false),
+                    MobileNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.NationalCode);
+                    table.ForeignKey(
+                        name: "FK_Patients_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "PersonNationalCode");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Persons",
+                columns: table => new
+                {
+                    NationalCode = table.Column<long>(type: "bigint", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(25)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Gender = table.Column<bool>(type: "bit", nullable: false),
+                    PatientNationalCode = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Persons", x => x.NationalCode);
+                    table.ForeignKey(
+                        name: "FK_Persons_AspNetUsers_NationalCode",
+                        column: x => x.NationalCode,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "PersonNationalCode");
+                    table.ForeignKey(
+                        name: "FK_Persons_Patients_PatientNationalCode",
+                        column: x => x.PatientNationalCode,
+                        principalTable: "Patients",
+                        principalColumn: "NationalCode");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WoundCares",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WoundCares", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WoundCares_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "PersonNationalCode");
+                    table.ForeignKey(
+                        name: "FK_WoundCares_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "NationalCode");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DressingCares",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WoundCareId = table.Column<int>(type: "int", nullable: false),
+                    DressingId = table.Column<byte>(type: "tinyint", nullable: false),
+                    Quantity = table.Column<byte>(type: "tinyint", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DressingCares", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DressingCares_Dressings_DressingId",
+                        column: x => x.DressingId,
+                        principalTable: "Dressings",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DressingCares_WoundCares_WoundCareId",
+                        column: x => x.WoundCareId,
+                        principalTable: "WoundCares",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +307,38 @@ namespace WoundClinic.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DressingCares_DressingId",
+                table: "DressingCares",
+                column: "DressingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DressingCares_WoundCareId",
+                table: "DressingCares",
+                column: "WoundCareId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_UserId",
+                table: "Patients",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Persons_PatientNationalCode",
+                table: "Persons",
+                column: "PatientNationalCode",
+                unique: true,
+                filter: "[PatientNationalCode] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WoundCares_PatientId",
+                table: "WoundCares",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WoundCares_UserId",
+                table: "WoundCares",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -215,7 +360,22 @@ namespace WoundClinic.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DressingCares");
+
+            migrationBuilder.DropTable(
+                name: "Persons");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Dressings");
+
+            migrationBuilder.DropTable(
+                name: "WoundCares");
+
+            migrationBuilder.DropTable(
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

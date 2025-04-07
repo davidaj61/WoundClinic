@@ -8,18 +8,20 @@ using System.Numerics;
 namespace WoundClinic.Data;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
-[PrimaryKey(nameof(Id), nameof(NationalCode))]
+[PrimaryKey(nameof(Id), nameof(PersonNationalCode))]
 public class ApplicationUser : IdentityUser
 {
     [Key]
     [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public long NationalCode { get; set; }
+    public long PersonNationalCode { get; set; }
 
     
     public Person Person { get; set; }
 
     public ICollection<Patient> Patients { get; set; }
+
+    public ICollection<WoundCare> WoundCares { get; set; }
 
 }
 

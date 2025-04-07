@@ -12,9 +12,11 @@ namespace WoundClinic.Data
         public long NationalCode { get; set; }
 
         [Required]
+        [Column(TypeName = "nvarchar(25)")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required]
+        [Column(TypeName = "nvarchar(50)")]
         public string LastName { get; set; } = string.Empty;
 
         [Required]
@@ -24,7 +26,7 @@ namespace WoundClinic.Data
         public Patient? Patient { get; set; }
 
         [ForeignKey(nameof(NationalCode))]
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
 
     }
 }

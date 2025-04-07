@@ -11,6 +11,7 @@ namespace WoundClinic.Data
         public byte Id { get; set; }
 
         [DisplayName("نام پانسمان")]
+        [Column(TypeName = "nvarchar(50)")]
         public string DressingName { get; set; }
 
         [DisplayName("قیمت ثابت دارد")]
@@ -20,6 +21,6 @@ namespace WoundClinic.Data
         public int Price { get; set; } = 0;
 
 
-        public ICollection<DressingCare> DressingCare { get; set; }
+        public ICollection<DressingCare> DressingCares { get; set; }
     }
 }
