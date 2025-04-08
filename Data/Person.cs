@@ -22,10 +22,10 @@ namespace WoundClinic.Data
         [Required]
         public bool Gender { get; set; }
 
-        [ForeignKey(nameof(NationalCode))]
+        
         public Patient? Patient { get; set; }
 
-        [ForeignKey(nameof(NationalCode))]
+        
         public ApplicationUser? ApplicationUser { get; set; }
 
     }

@@ -20,10 +20,8 @@ namespace WoundClinic.Data
 
         public string? Description { get; set; }
 
-        [ForeignKey(nameof(PatientId))]
         public Patient Patient { get; set; }
 
-        [ForeignKey(nameof(UserId)),DeleteBehavior(DeleteBehavior.Restrict)]
         public ApplicationUser ApplicationUser { get; set; }
 
         public ICollection<DressingCare> DressingCares { get; set; }

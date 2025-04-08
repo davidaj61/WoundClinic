@@ -19,10 +19,8 @@ namespace WoundClinic.Data
 
         public int Payment => Quantity * Price;
 
-        [ForeignKey(nameof(WoundCareId))]
         public WoundCare WoundCare { get; set; }
 
-        [ForeignKey(nameof(DressingId))]
         public Dressing Dressing { get; set; }
 
         

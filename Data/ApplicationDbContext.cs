@@ -22,11 +22,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         base.OnModelCreating(modelBuilder);
 
         
-        modelBuilder.Entity<Patient>()
-            .HasOne(q => q.Person)
-            .WithOne(q => q.Patient)
-            .HasForeignKey<Person>()
-            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Person>()
+            .HasOne(q => q.Patient)
+            .WithOne(q => q.Person)
+            .HasForeignKey<Patient>(q=>q.NationalCode)
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired(false);
 
 
 
@@ -38,13 +39,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
 
-        modelBuilder.Entity<ApplicationUser>()
-            .HasOne(e => e.Person)
-            .WithOne(e => e.ApplicationUser)
-            .HasPrincipalKey<ApplicationUser>(e=>e.PersonNationalCode)
-            .HasForeignKey<Person>(e=>e.NationalCode)
+        modelBuilder.Entity<Person>()
+            .HasOne(e => e.ApplicationUser)
+            .WithOne(e => e.Person)
+            .HasForeignKey<ApplicationUser>(e=>e.PersonNationalCode)
             .OnDelete(DeleteBehavior.NoAction)
-            .IsRequired();
+            .IsRequired(false);
 
         modelBuilder.Entity<WoundCare>()
             .HasOne(q => q.ApplicationUser)

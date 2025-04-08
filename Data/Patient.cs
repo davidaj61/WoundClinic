@@ -20,7 +20,6 @@ namespace WoundClinic.Data
 
         public long UserId { get; set; }
 
-        [ForeignKey(nameof(UserId))]
         public ApplicationUser ApplicationUser { get; set; }
 
         public Person Person { get; set; }
