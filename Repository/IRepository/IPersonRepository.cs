@@ -4,16 +4,15 @@ namespace WoundClinic.Repository.IRepository
 {
     public interface IPersonRepository
     {
-        public Person Create(Person person);
+        public Task<Person> CreateAsync(Person person);
 
-        public Person Update(Person person);
+        public Task<Person> UpdateAsync(Person person);
 
-        public Person Delete(Person person);
+        public Task<bool> DeleteAsync(Person person);
 
-        public Person Get(long id);
+        public Task<Person> GetAsync(long id);
         
-        public IEnumerable<Person> GetAll();
-
+        public Task<IEnumerable<Person>> GetAllAsync();
 
     }
 }

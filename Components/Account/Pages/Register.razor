@@ -15,47 +15,58 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 
-<PageTitle>Register</PageTitle>
+<PageTitle>ثبت کاربر</PageTitle>
 
-<h1>Register</h1>
+<h1>ثبت کاربر</h1>
 
 <div class="row">
     <div class="col-lg-6">
         <StatusMessage Message="@Message" />
         <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
             <DataAnnotationsValidator />
-            <h2>Create a new account.</h2>
+            <h2>ساخت یوزر جدید.</h2>
             <hr />
             <ValidationSummary class="text-danger" role="alert" />
-            <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.Email" id="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label for="Input.Email">Email</label>
-                <ValidationMessage For="() => Input.Email" class="text-danger" />
+            <div class="form-group">
+                <label for="nationalCode">کد ملی</label>
+                <InputNumber id="nationalCode" class="form-control" @bind-Value="Patient.NationalCode" />
             </div>
-            <div class="form-floating mb-3">
-                <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="Input.Password">Password</label>
+            <div class="form-group">
+                <label for="firstName">نام</label>
+                <InputText id="firstName" class="form-control" @bind-Value="Person.FirstName" />
+            </div>
+            <div class="form-group">
+                <label for="lastName">نام خانوادگی</label>
+                <InputText id="lastName" class="form-control" @bind-Value="Person.LastName" />
+            </div>
+            <div class="form-group">
+                <label for="gender">جنسیت</label>
+                <InputSelect id="gender" class="form-control" @bind-Value="Person.Gender">
+                    <option value="true">مرد</option>
+                    <option value="false">زن</option>
+                </InputSelect>
+            </div>
+            <div class="form-group ">
+                <label for="Input.Password">رمز ورود</label>
+                <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="رمز ورود" />
                 <ValidationMessage For="() => Input.Password" class="text-danger" />
             </div>
-            <div class="form-floating mb-3">
-                <InputText type="password" @bind-Value="Input.ConfirmPassword" id="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="Input.ConfirmPassword">Confirm Password</label>
+            <div class="form-group">
+                <label for="Input.ConfirmPassword">تکرار رمز ورود</label>
+                <InputText type="password" @bind-Value="Input.ConfirmPassword" id="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="تکرار رمز ورود" />
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">ثبت کاربر</button>
         </EditForm>
     </div>
-    <div class="col-lg-4 col-lg-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            <ExternalLoginPicker />
-        </section>
-    </div>
+    
 </div>
 
 @code {
     private IEnumerable<IdentityError>? identityErrors;
+
+    public Patient Patient { get; set; } = new Patient();
+    public Person Person { get; set; } = new Person();
 
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();
