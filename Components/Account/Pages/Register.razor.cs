@@ -3,19 +3,19 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Eventing.Reader;
 using System.Text;
 using System.Text.Encodings.Web;
 using WoundClinic.Data;
+using WoundClinic.Repository;
 using WoundClinic.ViewModels.Account;
 
 namespace WoundClinic.Components.Account.Pages
 {
     public partial class Register
     {
-        private IEnumerable<IdentityError>? identityErrors;
-
-
         
+        private IEnumerable<IdentityError>? identityErrors;
 
         [SupplyParameterFromForm]
         private RegisterUserViewModel Input { get; set; } = new();
@@ -25,14 +25,32 @@ namespace WoundClinic.Components.Account.Pages
 
         private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
 
-        public async Task RegisterUser(EditContext editContext)
+        public async Task RegisterUser()
         {
-            var user = CreateUser();
-            var person = new Person();
+            var person=new Person()
+            {
+                FirstName=Input.FirstName,
+                LastName=Input.LastName,
+                Gender=Input.Gender,
+                NationalCode=Input.PersonNationalCode,
+                
+            };
             
+            var user = CreateUser();
 
             await UserStore.SetUserNameAsync(user, Input.PersonNationalCode.ToString(), CancellationToken.None);
+
+            if(_personRepository.CheckPersonExist(Input.PersonNationalCode).Result)
+            {
+                user.Person = _personRepository.GetAsync(Input.PersonNationalCode).Result;
+            }
+            else
+            {
+                user.Person = await _personRepository.CreateAsync(person);
+            }
             
+            
+            user.PersonNationalCode=user.Person.NationalCode;
             var result = await UserManager.CreateAsync(user, Input.Password);
 
             if (!result.Succeeded)

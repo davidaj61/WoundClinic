@@ -11,6 +11,8 @@ namespace WoundClinic.Repository.IRepository
         public Task<bool> DeleteAsync(Person person);
 
         public Task<Person> GetAsync(long id);
+
+        public Task<bool> CheckPersonExist(long id);
         
         public Task<IEnumerable<Person>> GetAllAsync();
 

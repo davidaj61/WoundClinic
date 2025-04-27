@@ -5,7 +5,6 @@
 @using System.Text.Encodings.Web
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using WoundClinic.Data
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -14,6 +13,7 @@
 @inject ILogger<Register> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject IPersonRepository _personRepository
 
 <PageTitle>ثبت کاربر</PageTitle>
 
@@ -29,31 +29,31 @@
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-group">
                 <label for="nationalCode">کد ملی</label>
-                <InputNumber id="nationalCode" class="form-control" @bind-Value="Input.PersonNationalCode" />
+                <InputNumber id="nationalCode" class="form-control" @bind-Value="@Input.PersonNationalCode" />
             </div>
             <div class="form-group">
                 <label for="firstName">نام</label>
-                <InputText id="firstName" class="form-control" @bind-Value="Input.FirstName" />
+                <InputText id="firstName" class="form-control" @bind-Value="@Input.FirstName" />
             </div>
             <div class="form-group">
                 <label for="lastName">نام خانوادگی</label>
-                <InputText id="lastName" class="form-control" @bind-Value="Input.LastName" />
+                <InputText id="lastName" class="form-control" @bind-Value="@Input.LastName" />
             </div>
             <div class="form-group">
                 <label for="gender">جنسیت</label>
-                <InputSelect id="gender" class="form-control" @bind-Value="Input.Gender">
+                <InputSelect id="gender" class="form-control" @bind-Value="@Input.Gender">
                     <option value="true">مرد</option>
                     <option value="false">زن</option>
                 </InputSelect>
             </div>
             <div class="form-group ">
                 <label for="Input.Password">رمز ورود</label>
-                <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="رمز ورود" />
+                <InputText type="password" @bind-Value="@Input.Password" id="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="رمز ورود" />
                 <ValidationMessage For="() => Input.Password" class="text-danger" />
             </div>
             <div class="form-group">
                 <label for="Input.ConfirmPassword">تکرار رمز ورود</label>
-                <InputText type="password" @bind-Value="Input.ConfirmPassword" id="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="تکرار رمز ورود" />
+                <InputText type="password" @bind-Value="@Input.ConfirmPassword" id="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="تکرار رمز ورود" />
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">ثبت کاربر</button>

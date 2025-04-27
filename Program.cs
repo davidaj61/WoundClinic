@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using WoundClinic.Components;
 using WoundClinic.Components.Account;
 using WoundClinic.Data;
+using WoundClinic.Repository;
+using WoundClinic.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +14,11 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
   builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
 
 
 builder.Services.AddAuthentication(options =>

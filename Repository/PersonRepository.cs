@@ -48,6 +48,10 @@ namespace WoundClinic.Repository
         {
             return(await _db.Persons.ToListAsync());
         }
-        
+
+        public async Task<bool> CheckPersonExist(long id)
+        {
+            return (await _db.Persons.AnyAsync(x=> x.NationalCode == id));
+        }
     }
 }
