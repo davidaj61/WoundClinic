@@ -40,9 +40,9 @@ namespace WoundClinic.Components.Account.Pages
 
             await UserStore.SetUserNameAsync(user, Input.PersonNationalCode.ToString(), CancellationToken.None);
 
-            if(_personRepository.CheckPersonExist(Input.PersonNationalCode).Result)
+            if (await _personRepository.CheckPersonExist(Input.PersonNationalCode))
             {
-                user.Person = _personRepository.GetAsync(Input.PersonNationalCode).Result;
+                user.Person =await _personRepository.GetAsync(Input.PersonNationalCode);
             }
             else
             {

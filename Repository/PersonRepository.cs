@@ -51,7 +51,10 @@ namespace WoundClinic.Repository
 
         public async Task<bool> CheckPersonExist(long id)
         {
-            return (await _db.Persons.AnyAsync(x=> x.NationalCode == id));
+            return (await _db.Persons.AnyAsync(x => x.NationalCode == id));
         }
+
+        //create method for check person is exist
+
     }
 }
