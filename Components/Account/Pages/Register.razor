@@ -29,15 +29,15 @@
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-group">
                 <label for="nationalCode">کد ملی</label>
-                <InputNumber id="nationalCode" class="form-control" @bind-Value="@Input.PersonNationalCode" @bind="(long)1285046358" />
+                <InputNumber id="nationalCode" class="form-control" @bind-Value="@Input.PersonNationalCode"  />
             </div>
             <div class="form-group">
                 <label for="firstName">نام</label>
-                <InputText id="firstName" class="form-control" @bind-Value="@Input.FirstName" @bind="داود"/>
+                <InputText id="firstName" class="form-control" @bind-Value="@Input.FirstName" />
             </div>
             <div class="form-group">
                 <label for="lastName">نام خانوادگی</label>
-                <InputText id="lastName" class="form-control" @bind-Value="@Input.LastName" @bind="اقاویل جهرمی"/>
+                <InputText id="lastName" class="form-control" @bind-Value="@Input.LastName" />
             </div>
             <div class="form-group">
                 <label for="gender">جنسیت</label>
@@ -48,12 +48,12 @@
             </div>
             <div class="form-group ">
                 <label for="Input.Password">رمز ورود</label>
-                <InputText type="password" @bind-Value="@Input.Password" id="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="رمز ورود" @bind="Da@71968535" />
+                <InputText type="password" @bind-Value="@Input.Password" id="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="رمز ورود"  />
                 <ValidationMessage For="() => Input.Password" class="text-danger" />
             </div>
             <div class="form-group">
                 <label for="Input.ConfirmPassword">تکرار رمز ورود</label>
-                <InputText type="password" @bind-Value="@Input.ConfirmPassword" id="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="تکرار رمز ورود" @bind="Da@71968535" />
+                <InputText type="password" @bind-Value="@Input.ConfirmPassword" id="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="تکرار رمز ورود"  />
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">ثبت کاربر</button>

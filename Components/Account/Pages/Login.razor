@@ -28,10 +28,10 @@
                 <div class="input-group mb-3">
                     <div class="input-group-append">
                         <div class="input-group-text brClass">
-                            <span class="fas fa-envelope"></span>
+                            <span class="fas fa-user"></span>
                         </div>
                     </div>
-                    <InputText @bind-Value="Input.UserName" id="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="نام کاربری" />
+                    <InputText @bind-Value="Input.UserName" id="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="نام کاربری" />
                     <ValidationMessage For="() => Input.UserName" class="text-danger" />
                 </div>
                 <div class="input-group mb-3">
@@ -99,7 +99,6 @@
     private sealed class InputModel
     {
         [Required]
-        [EmailAddress]
         public string UserName { get; set; } = "";
 
         [Required]

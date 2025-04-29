@@ -54,7 +54,7 @@ namespace WoundClinic.Repository
             return (await _db.Persons.AnyAsync(x => x.NationalCode == id));
         }
 
-        //create method for check person is exist
+        
 
     }
 }
