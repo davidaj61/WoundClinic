@@ -14,7 +14,7 @@ namespace WoundClinic.Components.Account.Pages
 {
     public partial class Register
     {
-        
+
         private IEnumerable<IdentityError>? identityErrors;
 
         [SupplyParameterFromForm]
@@ -27,30 +27,38 @@ namespace WoundClinic.Components.Account.Pages
 
         public async Task RegisterUser()
         {
-            var person=new Person()
+            Person person;
+            if (long.TryParse(Input.PersonNationalCode, out long nationalcode))
             {
-                FirstName=Input.FirstName,
-                LastName=Input.LastName,
-                Gender=Input.Gender,
-                NationalCode=Input.PersonNationalCode,
-                
-            };
-            
-            var user = CreateUser();
+                person = new Person()
+                {
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Gender = Input.Gender,
+                    NationalCode = nationalcode,
+
+                };
+            }
+            else
+            {
+                return;
+            }
+
+                var user = CreateUser();
 
             await UserStore.SetUserNameAsync(user, Input.PersonNationalCode.ToString(), CancellationToken.None);
 
-            if (await _personRepository.CheckPersonExist(Input.PersonNationalCode))
+            if (await _personRepository.CheckPersonExist(nationalcode))
             {
-                user.Person =await _personRepository.GetAsync(Input.PersonNationalCode);
+                user.Person = await _personRepository.GetAsync(nationalcode);
             }
             else
             {
                 user.Person = await _personRepository.CreateAsync(person);
             }
-            
-            user.EmailConfirmed=user.PhoneNumberConfirmed=true;
-            user.PersonNationalCode=user.Person.NationalCode;
+
+            user.EmailConfirmed = user.PhoneNumberConfirmed = true;
+            user.PersonNationalCode = user.Person.NationalCode;
             var result = await UserManager.CreateAsync(user, Input.Password);
 
             if (!result.Succeeded)
@@ -78,8 +86,8 @@ namespace WoundClinic.Components.Account.Pages
             }
         }
 
-       
 
-        
+
+
     }
 }

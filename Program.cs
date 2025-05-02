@@ -7,8 +7,15 @@ using WoundClinic.Components.Account.Pages;
 using WoundClinic.Data;
 using WoundClinic.Repository;
 using WoundClinic.Repository.IRepository;
+using WoundClinic.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// ثبت IHttpContextAccessor و سرویس HttpContextService
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<HttpContextService>();
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
