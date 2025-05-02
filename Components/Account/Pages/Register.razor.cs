@@ -49,7 +49,7 @@ namespace WoundClinic.Components.Account.Pages
                 user.Person = await _personRepository.CreateAsync(person);
             }
             
-            
+            user.EmailConfirmed=user.PhoneNumberConfirmed=true;
             user.PersonNationalCode=user.Person.NationalCode;
             var result = await UserManager.CreateAsync(user, Input.Password);
 
