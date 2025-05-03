@@ -22,11 +22,12 @@ namespace WoundClinic.Data
         [Required]
         public bool Gender { get; set; }
 
-        
+
         public Patient? Patient { get; set; }
 
-        
         public ApplicationUser? ApplicationUser { get; set; }
+
+        public string DisplayName => FirstName + " " + LastName;
 
     }
 }

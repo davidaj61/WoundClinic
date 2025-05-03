@@ -23,5 +23,7 @@ public class ApplicationUser : IdentityUser
 
     public ICollection<WoundCare> WoundCares { get; set; }
 
+    
+
 }
 
