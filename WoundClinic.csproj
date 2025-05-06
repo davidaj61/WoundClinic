@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\ViewModels\Patient\" />
     <Folder Include="Services\Repository\" />
   </ItemGroup>
 

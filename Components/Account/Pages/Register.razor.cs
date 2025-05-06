@@ -7,7 +7,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Text;
 using System.Text.Encodings.Web;
 using WoundClinic.Models;
-using WoundClinic.Models.ViewModels.Account;
+using WoundClinic.Models.ViewModels;
 using WoundClinic.Services;
 
 namespace WoundClinic.Components.Account.Pages

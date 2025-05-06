@@ -1,18 +1,40 @@
-﻿@using WoundClinic.Models
+﻿@using WoundClinic.Models.ViewModels
 @using System.ComponentModel.DataAnnotations
 
-<EditForm FormName="AddPatient" Model="Patient" OnValidSubmit="registerPatient">
+<EditForm FormName="AddPatient" Model="InputPatient" OnValidSubmit="registerPatient">
     <DataAnnotationsValidator />
     <ValidationSummary class="text-danger" role="alert" />
     <div class="card-body">
-        <_AddPersonComponent/>
+        <div class="form-group">
+            <label for="inp">کد ملی</label>
+            <InputText id="nationalCode" class="form-control" @bind-Value="InputPatient.NationalCode" />
+            <ValidationMessage For="() => InputPatient." class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="firstName">نام</label>
+            <InputText id="firstName" class="form-control" @bind-Value="InputPatient.FirstName" />
+            <ValidationMessage For="() => InputPatient.FirstName" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="lastName">نام خانوادگی</label>
+            <InputText id="lastName" class="form-control" @bind-Value="InputPatient.LastName" />
+            <ValidationMessage For="() => InputPatient.LastName" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="gender">جنسیت</label>
+            <InputSelect id="gender" class="form-control" @bind-Value="InputPatient.Gender">
+                <option value="true">مرد</option>
+                <option value="false">زن</option>
+            </InputSelect>
+            <ValidationMessage For="()=>InputPatient.Gender" class="text-danger" />
+        </div>
         <div class="form-group">
             <label for="mobileNumber">شماره همراه</label>
-            <InputNumber id="mobileNumber" class="form-control" @bind-Value="Patient.MobileNumber" />
+            <InputText id="mobileNumber" class="form-control" @bind-Value="InputPatient.MobileNumber" />
         </div>
         <div class="form-group">
             <label for="address">آدرس</label>
-            <InputText id="address" class="form-control" @bind-Value="Patient.Address" />
+            <InputTextArea id="address" class="form-control" @bind-Value="InputPatient.Patient.Address" />
         </div>
     </div>
     <div class="card-footer">
@@ -23,11 +45,12 @@
 
 @code {
     [SupplyParameterFromForm]
-    private Patient Patient { get; set; } = new Patient();
+    //[CascadingParameter]
+    private RegisterPatientViewModel InputPatient { get; set; }
 
-    async Task<Patient> registerPatient()
+    async Task<RegisterPatientViewModel> registerPatient()
     {
-        return new Patient();
+        return new RegisterPatientViewModel();
     }
 
 }

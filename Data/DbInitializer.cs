@@ -20,7 +20,7 @@ namespace WoundClinic.Data
             
 
             // اعمال مایگریشن‌ها
-            await context.Database.MigrateAsync();
+            //await context.Database.MigrateAsync();
 
             // ایجاد نقش پیش‌فرض
             var roleName = "مدیر سیستم";
@@ -31,12 +31,13 @@ namespace WoundClinic.Data
             // افزودن person مرتبط با کاربر
             if (!context.Persons.Any())
             {
-                var person = new Person
+                Person person = new Person
                 {
                     FirstName="داود",
                     LastName="اقاویل جهرمی",
                     Gender= true,
                     NationalCode = 1285046358,
+                    
                 };
                 context.Persons.Add(person);
                 await context.SaveChangesAsync();
