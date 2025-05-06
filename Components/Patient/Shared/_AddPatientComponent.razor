@@ -1,0 +1,134 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WoundClinic.Models
+@using WoundClinic.Models.ViewModels
+@using Services.Shared
+
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager navigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject Services.IRepository.IPersonRepository _personRepository
+@inject Services.IRepository.IPatientRepository _patientRepository
+
+
+<EditForm FormName="AddPatient" Model="Input" OnValidSubmit="registerPatient">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="text-danger" role="alert" />
+    <div class="card-body">
+        <div class="form-group">
+            <label for="inp">کد ملی</label>
+            <InputText id="nationalCode" class="form-control" @bind-Value="Input.NationalCodeString" />
+            <ValidationMessage For="() => Input.NationalCodeString" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="firstName">نام</label>
+            <InputText id="firstName" class="form-control" @bind-Value="Input.FirstName" />
+            <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="lastName">نام خانوادگی</label>
+            <InputText id="lastName" class="form-control" @bind-Value="Input.LastName" />
+            <ValidationMessage For="() => Input.LastName" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="gender">جنسیت</label>
+            <InputSelect id="gender" class="form-control" @bind-Value="Input.Gender">
+                <option value="true">مرد</option>
+                <option value="false">زن</option>
+            </InputSelect>
+            <ValidationMessage For="()=>Input.Gender" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="mobileNumber">شماره همراه</label>
+            <InputText id="mobileNumber" class="form-control" @bind-Value="Input.MobileNumberString" />
+            <ValidationMessage For="()=>Input.MobileNumberString" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="address">آدرس</label>
+            <InputTextArea id="address" class="form-control" @bind-Value="Input.Address" />
+        </div>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-primary" type="submit">ثبت</button>
+    </div>
+</EditForm>
+
+
+@code {
+    [SupplyParameterFromForm] private RegisterPatientViewModel Input { get; set; } = new RegisterPatientViewModel();
+
+    private ApplicationUser? ActiveUser { get; set; }
+    private Person person { get; set; }
+    private Patient patient { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity?.IsAuthenticated == true)
+            {
+                ActiveUser = await UserManager.GetUserAsync(user);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in OnInitializedAsync: {ex.Message}");
+            // یا می‌توانید پیام خطا را در UI نشان دهید
+        }
+    }
+
+    async Task<ResultDto<Patient>> registerPatient()
+    {
+        
+        person = new()
+            {
+                NationalCodeString = Input.NationalCodeString,
+                FirstName = Input.FirstName,
+                LastName = Input.LastName,
+                Gender = Input.Gender,
+            };
+
+        if (ActiveUser != null)
+        {
+            patient = new()
+                {
+                    UserId = ActiveUser.PersonNationalCode,
+                    NationalCode = person.NationalCode,
+                    MobileNumberString = Input.MobileNumberString,
+                    Address = Input.Address,
+                };
+        }
+        else
+        {
+            navigationManager.NavigateTo("account/login");
+        }
+
+        if (await _personRepository.CheckPersonExist(person.NationalCode))
+        {
+            patient.Person = await _personRepository.GetAsync(person.NationalCode);
+        }
+        else
+        {
+            patient.Person = await _personRepository.CreateAsync(person);
+        }
+
+        var result = await _patientRepository.CreateAsync(patient);
+
+        Input = new RegisterPatientViewModel();
+        StateHasChanged(); // اختیاری برای اطمینان از بروزرسانی UI
+
+        return new ResultDto<Patient>()
+            {
+                Data = result,
+                IsSuccess = true,
+                Message = "بیمار با موفقیت ثبت نام شد.",
+            };
+
+
+
+    }
+
+}

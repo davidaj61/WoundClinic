@@ -9,13 +9,42 @@
 @using WoundClinic.Models
 @using WoundClinic.Services.IRepository
 
-<div class="col-4">
+@inject NavigationManager navigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+
+<PageTitle>ثبت نام بیمار</PageTitle>
+<div class="d-flex  col-4">
     <div class="card card-primary">
         <div class="card-header">
             <h3>ثبت بیمار</h3>
         </div>
-        <WoundClinic.Components.Patient.Components._AddPatientComponent/>
+        <WoundClinic.Components.Patient.Shared._AddPatientComponent/>
     </div>
 </div>
+
+@code
+{
+    private bool _hasRendered = false;
+
+    protected override Task OnInitializedAsync()
+    {
+        _hasRendered = true;
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !_hasRendered)
+        {
+            _hasRendered = true;
+            await CheckUserAuthentication();
+            StateHasChanged();
+        }
+    }
+
+    
+}
 
 

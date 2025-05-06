@@ -20,7 +20,7 @@ namespace WoundClinic.Data
             
 
             // اعمال مایگریشن‌ها
-            //await context.Database.MigrateAsync();
+            await context.Database.MigrateAsync();
 
             // ایجاد نقش پیش‌فرض
             var roleName = "مدیر سیستم";

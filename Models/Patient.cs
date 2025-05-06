@@ -16,6 +16,13 @@ namespace WoundClinic.Models
         [Required(ErrorMessage ="ورود شماره تلفن همراه الزامی است.")]
         public long MobileNumber { get; set; }
 
+        [NotMapped]
+        public string MobileNumberString 
+        { 
+            get => MobileNumber.ToString(); 
+            set =>MobileNumber=long.TryParse(value, out long number)?number:0;
+        }
+
         public string? Address { get; set; }
 
 

@@ -13,11 +13,6 @@ namespace WoundClinic.Models
         public long NationalCode { get; set; }
 
         [NotMapped]
-        [Required(ErrorMessage = "ورود کد ملی الزامی است")]
-        [Display(Name = "کد ملی")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "کد ملی باید 10 رقم باشد")]
-        [Length(10, 10, ErrorMessage = "تعداد ارقام کد ملی صحیح نمی باشد.")]
-        [NationalCode(ErrorMessage ="کد ملی صحیح نمی باشد.")]
         public string NationalCodeString 
         {
             get=>NationalCode.ToString(); 
