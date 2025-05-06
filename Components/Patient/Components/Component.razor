@@ -1,0 +1,13 @@
+@using WoundClinic.Models
+@using System.ComponentModel.DataAnnotations
+
+@code {
+    [SupplyParameterFromForm]
+    private Patient Patient { get; set; } = new Patient();
+
+    async Task<Patient> registerPatient()
+    {
+        return new Patient();
+    }
+
+}

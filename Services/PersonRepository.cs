@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using WoundClinic.Data;
-using WoundClinic.Repository.IRepository;
+using WoundClinic.Models;
+using WoundClinic.Services.IRepository;
 
-namespace WoundClinic.Repository
+namespace WoundClinic.Services
 {
     public class PersonRepository : IPersonRepository
     {
@@ -46,12 +47,12 @@ namespace WoundClinic.Repository
 
         public async Task<IEnumerable<Person>> GetAllAsync()
         {
-            return(await _db.Persons.ToListAsync());
+            return await _db.Persons.ToListAsync();
         }
 
         public async Task<bool> CheckPersonExist(long id)
         {
-            return (await _db.Persons.AnyAsync(x => x.NationalCode == id));
+            return await _db.Persons.AnyAsync(x => x.NationalCode == id);
         }
 
         

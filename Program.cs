@@ -5,9 +5,9 @@ using WoundClinic.Components;
 using WoundClinic.Components.Account;
 using WoundClinic.Components.Account.Pages;
 using WoundClinic.Data;
-using WoundClinic.Repository;
-using WoundClinic.Repository.IRepository;
+using WoundClinic.Models;
 using WoundClinic.Services;
+using WoundClinic.Services.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +50,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
@@ -58,6 +58,12 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await DbInitializer.SeedAsync(services);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

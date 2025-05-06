@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WoundClinic.Validations;
 
-namespace WoundClinic.ViewModels.Account
+namespace WoundClinic.Models.ViewModels.Account
 {
     public sealed class RegisterUserViewModel
     {

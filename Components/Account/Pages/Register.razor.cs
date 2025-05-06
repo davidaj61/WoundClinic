@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Eventing.Reader;
 using System.Text;
 using System.Text.Encodings.Web;
-using WoundClinic.Data;
-using WoundClinic.Repository;
-using WoundClinic.ViewModels.Account;
+using WoundClinic.Models;
+using WoundClinic.Models.ViewModels.Account;
+using WoundClinic.Services;
 
 namespace WoundClinic.Components.Account.Pages
 {

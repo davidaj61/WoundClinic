@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
 
-namespace WoundClinic.Data
+namespace WoundClinic.Models
 {
     public class WoundCare
     {

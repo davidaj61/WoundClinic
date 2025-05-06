@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using WoundClinic.Data;
+using WoundClinic.Models;
 
 namespace WoundClinic.Components.Account;
 

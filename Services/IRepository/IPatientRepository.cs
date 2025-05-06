@@ -1,6 +1,6 @@
-﻿using WoundClinic.Data;
+﻿using WoundClinic.Models;
 
-namespace WoundClinic.Repository.IRepository
+namespace WoundClinic.Services.IRepository
 {
     public interface IPatientRepository
     {

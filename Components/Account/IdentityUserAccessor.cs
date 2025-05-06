@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using WoundClinic.Data;
+using WoundClinic.Models;
 
 namespace WoundClinic.Components.Account;
 

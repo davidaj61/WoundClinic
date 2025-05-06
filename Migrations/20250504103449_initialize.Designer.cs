@@ -12,8 +12,8 @@ using WoundClinic.Data;
 namespace WoundClinic.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250408085803_init")]
-    partial class init
+    [Migration("20250504103449_initialize")]
+    partial class initialize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace WoundClinic.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.ApplicationUser", b =>
+            modelBuilder.Entity("WoundClinic.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -226,7 +226,7 @@ namespace WoundClinic.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.Dressing", b =>
+            modelBuilder.Entity("WoundClinic.Models.Dressing", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -249,7 +249,7 @@ namespace WoundClinic.Migrations
                     b.ToTable("Dressings");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.DressingCare", b =>
+            modelBuilder.Entity("WoundClinic.Models.DressingCare", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -278,7 +278,7 @@ namespace WoundClinic.Migrations
                     b.ToTable("DressingCares");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.Patient", b =>
+            modelBuilder.Entity("WoundClinic.Models.Patient", b =>
                 {
                     b.Property<long>("NationalCode")
                         .HasColumnType("bigint");
@@ -299,7 +299,7 @@ namespace WoundClinic.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.Person", b =>
+            modelBuilder.Entity("WoundClinic.Models.Person", b =>
                 {
                     b.Property<long>("NationalCode")
                         .HasColumnType("bigint");
@@ -320,7 +320,7 @@ namespace WoundClinic.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.WoundCare", b =>
+            modelBuilder.Entity("WoundClinic.Models.WoundCare", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -360,7 +360,7 @@ namespace WoundClinic.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WoundClinic.Data.ApplicationUser", null)
+                    b.HasOne("WoundClinic.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,7 +369,7 @@ namespace WoundClinic.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WoundClinic.Data.ApplicationUser", null)
+                    b.HasOne("WoundClinic.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -384,7 +384,7 @@ namespace WoundClinic.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WoundClinic.Data.ApplicationUser", null)
+                    b.HasOne("WoundClinic.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -393,32 +393,32 @@ namespace WoundClinic.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WoundClinic.Data.ApplicationUser", null)
+                    b.HasOne("WoundClinic.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.ApplicationUser", b =>
+            modelBuilder.Entity("WoundClinic.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("WoundClinic.Data.Person", "Person")
+                    b.HasOne("WoundClinic.Models.Person", "Person")
                         .WithOne("ApplicationUser")
-                        .HasForeignKey("WoundClinic.Data.ApplicationUser", "PersonNationalCode")
+                        .HasForeignKey("WoundClinic.Models.ApplicationUser", "PersonNationalCode")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.DressingCare", b =>
+            modelBuilder.Entity("WoundClinic.Models.DressingCare", b =>
                 {
-                    b.HasOne("WoundClinic.Data.Dressing", "Dressing")
+                    b.HasOne("WoundClinic.Models.Dressing", "Dressing")
                         .WithMany("DressingCares")
                         .HasForeignKey("DressingId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("WoundClinic.Data.WoundCare", "WoundCare")
+                    b.HasOne("WoundClinic.Models.WoundCare", "WoundCare")
                         .WithMany("DressingCares")
                         .HasForeignKey("WoundCareId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -429,14 +429,14 @@ namespace WoundClinic.Migrations
                     b.Navigation("WoundCare");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.Patient", b =>
+            modelBuilder.Entity("WoundClinic.Models.Patient", b =>
                 {
-                    b.HasOne("WoundClinic.Data.Person", "Person")
+                    b.HasOne("WoundClinic.Models.Person", "Person")
                         .WithOne("Patient")
-                        .HasForeignKey("WoundClinic.Data.Patient", "NationalCode")
+                        .HasForeignKey("WoundClinic.Models.Patient", "NationalCode")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("WoundClinic.Data.ApplicationUser", "ApplicationUser")
+                    b.HasOne("WoundClinic.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Patients")
                         .HasForeignKey("UserId")
                         .HasPrincipalKey("PersonNationalCode")
@@ -448,15 +448,15 @@ namespace WoundClinic.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.WoundCare", b =>
+            modelBuilder.Entity("WoundClinic.Models.WoundCare", b =>
                 {
-                    b.HasOne("WoundClinic.Data.Patient", "Patient")
+                    b.HasOne("WoundClinic.Models.Patient", "Patient")
                         .WithMany("WoundCares")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("WoundClinic.Data.ApplicationUser", "ApplicationUser")
+                    b.HasOne("WoundClinic.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("WoundCares")
                         .HasForeignKey("UserId")
                         .HasPrincipalKey("PersonNationalCode")
@@ -468,31 +468,31 @@ namespace WoundClinic.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.ApplicationUser", b =>
+            modelBuilder.Entity("WoundClinic.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Patients");
 
                     b.Navigation("WoundCares");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.Dressing", b =>
+            modelBuilder.Entity("WoundClinic.Models.Dressing", b =>
                 {
                     b.Navigation("DressingCares");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.Patient", b =>
+            modelBuilder.Entity("WoundClinic.Models.Patient", b =>
                 {
                     b.Navigation("WoundCares");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.Person", b =>
+            modelBuilder.Entity("WoundClinic.Models.Person", b =>
                 {
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("WoundClinic.Data.WoundCare", b =>
+            modelBuilder.Entity("WoundClinic.Models.WoundCare", b =>
                 {
                     b.Navigation("DressingCares");
                 });

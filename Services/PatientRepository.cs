@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WoundClinic.Data;
-using WoundClinic.Repository.IRepository;
+using WoundClinic.Models;
+using WoundClinic.Services.IRepository;
 
-namespace WoundClinic.Repository
+namespace WoundClinic.Services
 {
     public class PatientRepository:IPatientRepository
     {
@@ -45,7 +46,7 @@ namespace WoundClinic.Repository
 
         public async Task<IEnumerable<Patient>> GetAllAsync()
         {
-            return (await _db.Patients.ToListAsync());
+            return await _db.Patients.ToListAsync();
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WoundClinic.Data
+namespace WoundClinic.Models
 {
     public class Dressing
     {

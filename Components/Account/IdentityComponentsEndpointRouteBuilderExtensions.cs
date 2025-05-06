@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using WoundClinic.Components.Account.Pages;
 using WoundClinic.Components.Account.Pages.Manage;
-using WoundClinic.Data;
+using WoundClinic.Models;
 
 namespace Microsoft.AspNetCore.Routing;
 

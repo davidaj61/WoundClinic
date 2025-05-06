@@ -1,0 +1,33 @@
+﻿@using WoundClinic.Models
+@using System.ComponentModel.DataAnnotations
+
+<EditForm FormName="AddPatient" Model="Patient" OnValidSubmit="registerPatient">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="text-danger" role="alert" />
+    <div class="card-body">
+        <_AddPersonComponent/>
+        <div class="form-group">
+            <label for="mobileNumber">شماره همراه</label>
+            <InputNumber id="mobileNumber" class="form-control" @bind-Value="Patient.MobileNumber" />
+        </div>
+        <div class="form-group">
+            <label for="address">آدرس</label>
+            <InputText id="address" class="form-control" @bind-Value="Patient.Address" />
+        </div>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-primary" type="submit">ثبت</button>
+    </div>
+</EditForm>
+
+
+@code {
+    [SupplyParameterFromForm]
+    private Patient Patient { get; set; } = new Patient();
+
+    async Task<Patient> registerPatient()
+    {
+        return new Patient();
+    }
+
+}
