@@ -1,6 +1,27 @@
 ﻿@page "/Dressing/CaresRegister"
-<PageTitle>ثبت خدمات پانسمان زخم</PageTitle>
+@using WoundClinic.Components.Shared_Components
 
+<PageTitle>ثبت خدمات پانسمان زخم</PageTitle>
+<div class="d-flex">
+
+<div class="col-3 h-100">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3>اطلاعات بیمار</h3>
+        </div>
+        <_PersonDetailesComponent />
+    </div>
+</div>
+
+<div class="col-7 h-100">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3>پانسمان </h3>
+        </div>
+        <_PersonDetailesComponent />
+    </div>
+</div>
+</div>
 
 @code {
 

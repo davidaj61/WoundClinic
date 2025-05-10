@@ -1,5 +1,39 @@
-﻿<h3>_PersonDetailesComponent</h3>
+﻿<div class="p-3">
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">کد ملی</span>
+        </div>
+        <label type="text" class="form-control" aria-describedby="basic-addon1">@NationalCode</label>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">نام</span>
+        </div>
+        <label type="text" class="form-control" aria-describedby="basic-addon1">@FirstName</label>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">نام خانوادگی</span>
+        </div>
+        <label type="text" class="form-control" aria-describedby="basic-addon1">@LastName</label>
+    </div>
+</div>
+<hr />
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">تاریخ انجام خدمات</span>
+    </div>
+    <InputPersianDatePicker @bind-Value=CareDate.ToShortDateString() />
+</div>
+
 
 @code {
+
+    [Parameter] public string? NationalCode { get; set; }
+    [Parameter] public string? FirstName { get; set; }
+    [Parameter] public string? LastName { get; set; }
+    [Parameter] public DateTime CareDate { get; set; } = DateTime.Now;
+
 
 }
