@@ -1,5 +1,4 @@
-﻿@using Blazor.PersianDatePicker
-
+﻿
 <div class="p-3">
 
 	<div class="input-group mb-3">
@@ -25,26 +24,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text" id="basic-addon1">تاریخ انجام خدمات</span>
 		</div>
-		<InputPersianDatePicker  Id="myInputDatePicker"
-								@bind-Value=CareDate
-								Name="myInputName"
-								Visible="true"
-								Disabled="false"
-								PickerAlign="Align.Right"
-								PickerOffsetTopPositionInPixels="1"
-								InitialValueSetOnToday="false"
-								CalendarType="Calendar.SingleModeJalali"
-								DigitType="DigitType.BasedOnCalendar"
-								DateFormat="DateFormat.yyyy_slash_MM_slash_dd"
-								MinDateSetOnToday="true"
-								Placeholder="Select date"
-								CssClass="form-control w-100"
-								Style="border:1px solid green; width:20%; float:right"
-								Theme="PickerTheme.RedBlack"
-								MarkHolidays="true"
-								MarkedDates="@(["1403-06-25", "1403/06/27", "1403/06/28"])"
-								OnChange="@(() => Console.WriteLine("OK"))" 
-								 />
+		
 	</div>
 	<div class="input-group">
 		<div class="input-group-prepend">
@@ -56,10 +36,10 @@
 </div>
 @code {
 
-	[Parameter] public string? NationalCode { get; set; }
-	[Parameter] public string? FirstName { get; set; }
-	[Parameter] public string? LastName { get; set; }
+	[Parameter] public string NationalCode { get; set; }
+	[Parameter] public string FirstName { get; set; }
+	[Parameter] public string LastName { get; set; }
 	[Parameter] public string CareDate { get; set; } 
-	[Parameter]	public string Description{ get; set; }
+	[Parameter]	public string? Description{ get; set; }
 
 }

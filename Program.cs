@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using Blazor.PersianDatePicker.Extensions;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WoundClinic.Components;
@@ -15,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ثبت IHttpContextAccessor و سرویس HttpContextService
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<HttpContextService>();
+builder.Services.AddPersianDatePicker();
 
 
 // Add services to the container.
