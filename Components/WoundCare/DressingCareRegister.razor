@@ -1,28 +1,82 @@
 ﻿@page "/Dressing/CaresRegister"
-@using WoundClinic.Components.Shared_Components
+
+
+@using Common
+
+@inject IJSRuntime JSRuntime;
 
 <PageTitle>ثبت خدمات پانسمان زخم</PageTitle>
 <div class="d-flex">
 
-<div class="col-3 h-100">
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3>اطلاعات بیمار</h3>
-        </div>
-        <_PersonDetailesComponent />
-    </div>
+	<div class="col-3 h-100">
+		<div class="card card-primary">
+			<div class="card-header">
+				<h3>اطلاعات بیمار</h3>
+			</div>
+			<div class="p-3">
+
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">کد ملی</span>
+					</div>
+					<label type="text" class="form-control" aria-describedby="basic-addon1">@NationalCode</label>
+				</div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">نام</span>
+					</div>
+					<label type="text" class="form-control" aria-describedby="basic-addon1">@FirstName</label>
+				</div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">نام خانوادگی</span>
+					</div>
+					<label type="text" class="form-control" aria-describedby="basic-addon1">@LastName</label>
+				</div>
+				<hr />
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">تاریخ انجام خدمات</span>
+					</div>
+					<input class="form-control @STATICS.PersianDateClass" id="basic-addon1" @bind=CareDate />
+				</div>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">توضیحات</span>
+					</div>
+					<textarea class="form-control" aria-label="With textarea">@Description</textarea>
+				</div>
+
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="col-7 h-100">
+		<div class="card card-primary">
+			<div class="card-header">
+				<h3>پانسمان </h3>
+			</div>
+			
+		</div>
+	</div>
 </div>
 
-<div class="col-7 h-100">
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3>پانسمان </h3>
-        </div>
-        <_PersonDetailesComponent />
-    </div>
-</div>
-</div>
 
 @code {
+
+	[Parameter] public string NationalCode { get; set; }
+	[Parameter] public string FirstName { get; set; }
+	[Parameter] public string LastName { get; set; }
+	[Parameter] public string CareDate { get; set; }
+	[Parameter] public string? Description { get; set; }
+	
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (!firstRender) return;
+		await JSRuntime.InvokeVoidAsync(STATICS.PersianDateFunction);
+
+	}
 
 }

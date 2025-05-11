@@ -1,0 +1,3 @@
+﻿function EnablePersianDTP() {
+    $(".persianDtpClass").persianDatepicker
+}
